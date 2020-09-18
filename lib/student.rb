@@ -31,20 +31,19 @@ def save
   if self.id
     self.update
   else
-    sql = <<-SQL 
-    INSERT INTO students (name, grade)
-    VALUES (?,?)
-  SQL
-
-  DB[:conn].execute(sql, self.name, self.grade)
+    sql = "
+    INSERT INTO dogs (name, breed)
+    VALUES (?,?)"
+    
+  DB[:conn].execute(sql, self.name, self.breed)
   @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 end
 
-def self.create(name, grade)
-    student = self.new(name, grade)
-    student.save
-    student
+def self.create(name, breed)
+    dog = self.new(name, breed)
+    dog.save
+    dog
   end
 
 
@@ -52,7 +51,7 @@ def self.new_from_db(row)
   id = row[0]
   name = row[1]
   grade = row[2]
-  self.new(id, name, grade)
+  self.new(id, name, breed)
 end 
 
 
